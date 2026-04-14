@@ -77,7 +77,7 @@ public class DayOne {
      *
      *    4: Inheritance
      *          classes can be created from your parent class(other class) by using inheritance
-     *
+
      *     the diamond problem
      *               A Class
      *              / \
