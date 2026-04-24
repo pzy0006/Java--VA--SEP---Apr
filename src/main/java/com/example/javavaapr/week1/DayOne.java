@@ -1,4 +1,4 @@
-package com.example.javavaapr;
+package com.example.javavaapr.week1;
 
 import java.util.ArrayList;
 import java.util.List;

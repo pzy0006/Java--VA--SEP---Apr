@@ -1,4 +1,4 @@
-package com.example.javavaapr;
+package com.example.javavaapr.week1;
 
 import javax.swing.text.html.Option;
 import java.util.Comparator;
