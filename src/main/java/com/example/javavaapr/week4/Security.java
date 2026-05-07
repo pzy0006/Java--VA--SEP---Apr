@@ -26,7 +26,7 @@ package com.example.javavaapr.week4;
  *         use root private key to sign intermediate certificate
  *      c. company generate server public key + server private key
  *         company will share server public key + other company info with CA
- *         CA sign server certificate by using intermediate certificate
+ *         CA sign server certificate by using intermediate private key
  *
  *
  *      a. user gets intermediate certificate + server certificate from server
