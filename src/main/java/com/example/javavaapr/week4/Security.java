@@ -70,8 +70,15 @@ package com.example.javavaapr.week4;
  *  6. Log injection... / sql injections / xml injections ...
  *  7. encrypt at rest
  *  8. DDOS
- *
- *
+ *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
+ *  Spring Security
+ *  For jwt flow
+ *  1. impl jwt filter
+ *      get jwt from header
+ *      verify jwt
+ *      save user details / authentication obj in security context
+ *  2. add jwt filter in filter chain
+ *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
  *  Homework3.1 (ai):
  *      1. add spring security to homework1
  *      2. save user name , password in h2 db
@@ -94,4 +101,6 @@ package com.example.javavaapr.week4;
  *      test api through Postman
  *
  * Deadline is next Thursday 10am EDT
+ *
+ * request -> api gateway -> lambda
  */
