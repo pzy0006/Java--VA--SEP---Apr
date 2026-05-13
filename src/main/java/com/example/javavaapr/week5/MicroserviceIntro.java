@@ -69,10 +69,77 @@ package com.example.javavaapr.week5;
  *      a. spring security -> send request -> security provider(cognito / other providers)
  *      b. spring security uses public key to verify jwt , get scope from jwt / read , load scope from DB
  *
- * 3. discovery service
- * 4. config service
- * 5. circuit breaker
+ * 3. discovery service(spring cloud eureka + ribbon... AWS CloudMap)
+ *
+ *      serviceA  ->  serviceB(ip1, ip2, ip3, ip4)
+ *            \
+ *            discovery service
+ *            serviceA: [ipX:portX]
+ *            serviceB: [ip1:port1,  ip2:port2]
+ *
+ *      1. start serviceB node  / serviceA node
+ *      2. node sends request to discovery service
+ *      3. node register node info (ip, port, name) in discovery service
+ *
+ *      serviceA send http request http://serviceB/...
+ *      1. service A query discovery service (find ip by "serviceB" name)
+ *      2. discovery service returns [ip1:port1,  ip2:port2] to serviceA
+ *      3. service A pick one of the ip , replace the http request endpoint
+ *         http://serviceB/...  =>   http://ip2:port2/...
+ *
+ *
+ * 4. config service (spring cloud config, AppConfig+SecretManager)
+ *      1. save all properties in git repository
+ *      2. start spring boot client -> it fetches properties from spring cloud config server
+ *
+ *      why we use it
+ *      1. reload new updates during runtime without re-deployment
+ *      2. help application encrypt / manage sensitive properties
+ *
+ *      spring cloud config git repo
+ *          XXX-application-dev.properties
+ *              username=ENC(XASDFASDFASDASDFASERASEFASDFASDFAS)
+ *
+ *      XXX-application spring boot loads properties at beginning (runtime)
+ *      spring cloud config service sends decrypted username to XXX-application
+ *
+ * 5. circuit breaker (Hystrix, resilience4j..)
+ *      serviceA -> serviceB
+ *      1. in last X requests, Y requests fail
+ *          change circuit breaker status / state
+ *          open
+ *              in last X requests, Y requests fail -> change status to close
+ *          close
+ *              service A will not send request to serviceB
+ *              service A will return default method value / default response to user
+ *              in the background -> serviceA checks serviceB health status
+ *                          if serviceB still not responding -> keep "close" status
+ *                          if serviceB is back -> we will change status to half open
+ *          half open
+ *              let X % request visit service B
+ *              if any requests / Y % requests get timeout -> change status back to close
+ *              if it's fine for Z mins..-> change status to open
+ *
  * 6. message queue intro
+ *      kafka
+ *      rabbit mq , active mq
+ *      sqs , sns
+ *      ..
+ *
+ *      user uploads file
+ *           |
+ *         service1 -  queue - service2
+ *           |
+ *          DB
+ *
+ *      service1
+ *      1. upload file to s3 + save metadata to DB
+ *      2. publish uploaded message / status to queue
+ *
+ *      service2
+ *      1. keep polling messages from queue
+ *      2. do jobs based on message
+ *
  * 7. take care of global transactions
  *       insert1    insert2    insert3
  *        |         |           |
@@ -89,5 +156,5 @@ package com.example.javavaapr.week5;
  *     commit db3 tx -> success
  *
  *     commit db2 tx -> fail
- *  8. deployment / ci, cd intro
+ *  8. deployment / ci, cd
  */
